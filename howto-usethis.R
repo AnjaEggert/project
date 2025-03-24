@@ -16,3 +16,5 @@ usethis::use_github()
 usethis::use_mit_license()
 
 usethis::use_readme_rmd()
+
+repro::automate()
