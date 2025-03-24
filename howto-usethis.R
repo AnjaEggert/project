@@ -20,3 +20,7 @@ usethis::use_mit_license()
 usethis::use_readme_rmd()
 
 repro::automate()
+
+repro::use_gha_docker()
+
+usethis::browse_github_actions()
