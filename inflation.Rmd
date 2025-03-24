@@ -2,7 +2,7 @@
 title: "Inflation Data"
 author: "Aaron Peikert"
 date: "`r Sys.Date()`"
-output: html_document
+output: pdf_document
 # output:
 #   tufte::tufte_handout: default
 #   tufte::tufte_html: default
