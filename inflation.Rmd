@@ -12,6 +12,7 @@ repro:
     - tidyverse
     - lubridate
     - aaronpeikert/repro@fc7e884
+    - patchwork
   scripts:
     - R/prepare_inflation.R
   data:
@@ -44,7 +45,21 @@ For this dataset the Bank of England asked `r prettyNum(nrow(inflation), big.mar
 The survey has run quarterly since `r min(inflation$year)`.
 
 ```{r}
-inflation %>% 
+p1 <- inflation %>% 
+  group_by(date) %>% 
+  summarise(across(c(perception, expectation),
+                   ~ mean(., na.rm = TRUE)),
+            .groups = "drop") %>% 
+  pivot_longer(c(expectation, perception)) %>% 
+  ungroup() %>% 
+  ggplot() +
+  geom_line(aes(date, value, color = name)) +
+    theme_minimal() +
+  ylab("subjective inflation in %-points") +
+  labs(color = "Name") +
+  theme(legend.position = c(.1, .9))
+
+p2 <- inflation %>% 
   group_by(date) %>% 
   summarise(across(c(perception, expectation),
                    ~ mean(., na.rm = TRUE)),
@@ -58,3 +73,9 @@ inflation %>%
   labs(color = "Name") +
   theme(legend.position = c(.1, .9))
 ```
+
+```{r}
+combine <- p1+p2
+combine
+```
+
